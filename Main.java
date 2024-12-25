@@ -84,10 +84,28 @@ public class Main {
         out.println("2.4");
         Class<?> NormisClass = Normis.class;
         if (NormisClass.isAnnotationPresent(Validate.class)) {
-            Validate annotation = NormisClass.getAnnotation(Validate.class);
-            Class<?>[] value = annotation.value();
+            Validate annotation = NormisClass.getAnnotation(Validate.class);//Получаем объект аннотации @Validate
+            Class<?>[] value = annotation.value();//Получаем значение свойства value аннотации
             out.println("Найдена аннотация @Validate на классе: " + NormisClass.getSimpleName());
             out.println("Значение свойства value: " + Arrays.toString(value));//преобразуем массив value в строковое представление для вывода.
         } else out.println("Класс " + NormisClass.getSimpleName() + " не помечен аннотацией @Validate");
+        
+        //2.5
+        out.println("2.5");
+        Class<?> NormalClass = Normal.class;
+        if (NormalClass.isAnnotationPresent(Two.class)) {
+            Two annotation = NormalClass.getAnnotation(Two.class);//Получаем объект аннотации @Two
+            out.println("Найдена аннотация @Two на классе: " + NormalClass.getSimpleName());
+            out.println("Значение свойства first: " + annotation.first());
+            out.println("Значение свойства second: " + annotation.second());
+        } else out.println("Класс " + NormalClass.getSimpleName() + " не помечен аннотацией @Two");
+        
+        //2.6
+        out.println("2.6");
+        if (NormalClass.isAnnotationPresent(Cache.class)) {
+            Cache annotation = NormalClass.getAnnotation(Cache.class);//Получаем объект аннотации @Cache
+            out.println("Найдена аннотация @Cache на классе: " + NormalClass.getSimpleName());
+            out.println("Значение свойства value: " + Arrays.toString(annotation.value()));
+        } else out.println("Класс " + NormalClass.getSimpleName() + " не помечен аннотацией @Cache");
     }
 }
