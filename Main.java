@@ -1,6 +1,7 @@
 import static java.lang.System.out;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 public class Main {
     @Invoke
@@ -13,6 +14,7 @@ public class Main {
     }
     
     public static void main(String[] args) throws Exception {
+        
         //2.1
         out.println("2.1");
         Method[] methods = Main.class.getDeclaredMethods();// Получаем все методы класса
@@ -52,6 +54,7 @@ public class Main {
                 out.println("Поле " + field.getName() + " не помечен аннотацией @Default");
             }
         }
+        
         //2.3
         out.println("2.3");
         Class<?> pointsClass = Points.class;
@@ -76,7 +79,15 @@ public class Main {
                     else out.println("Поле " + field.getName() + " не помечено аннотацией @ToString");
                 }
         } else out.println("Класс " + pointsClass.getSimpleName() + " не помечен аннотацией @ToString");
-            
         
+        //2.4
+        out.println("2.4");
+        Class<?> NormisClass = Normis.class;
+        if (NormisClass.isAnnotationPresent(Validate.class)) {
+            Validate annotation = NormisClass.getAnnotation(Validate.class);
+            Class<?>[] value = annotation.value();
+            out.println("Найдена аннотация @Validate на классе: " + NormisClass.getSimpleName());
+            out.println("Значение свойства value: " + Arrays.toString(value));//преобразуем массив value в строковое представление для вывода.
+        } else out.println("Класс " + NormisClass.getSimpleName() + " не помечен аннотацией @Validate");
     }
 }
