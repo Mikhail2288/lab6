@@ -52,6 +52,31 @@ public class Main {
                 out.println("Поле " + field.getName() + " не помечен аннотацией @Default");
             }
         }
+        //2.3
+        out.println("2.3");
+        Class<?> pointsClass = Points.class;
+        if (pointsClass.isAnnotationPresent(ToString.class)) {//Проверка на аннотацию ToString
+                ToString classAnnotation = pointsClass.getAnnotation(ToString.class);//Получаем аннотацию @ToString для класса Points
+                String classValue = classAnnotation.value();//Получаем значение свойства value аннотации для класса
+                out.println("Найдена аннотация @ToString на классе: " + pointsClass.getSimpleName());
+                out.println("Значение свойства value для класса: " + classValue);
+                if (classValue.equals("YES")) {// Если значение свойства value для класса"YES"
+                    Method toStringMethod = pointsClass.getMethod("toString");//Получаем метод toString
+                    Object instance = pointsClass.getDeclaredConstructor(String.class, int.class).newInstance("9mice", 87);//создает экземпляр класса 
+                    out.println("Результат toString для класса: " + (String) toStringMethod.invoke(instance));
+                 }
+                Field[] fieldz = pointsClass.getDeclaredFields();
+                for (Field field : fieldz) {
+                   if (field.isAnnotationPresent(ToString.class)) {
+                       ToString fieldAnnotation = field.getAnnotation(ToString.class);
+                       String fieldValue = fieldAnnotation.value();
+                       out.println("Найдена аннотация @ToString на поле: " + field.getName());
+                       out.println("Значение свойства value для поля " + field.getName() + ": " + fieldValue);
+                   }
+                    else out.println("Поле " + field.getName() + " не помечено аннотацией @ToString");
+                }
+        } else out.println("Класс " + pointsClass.getSimpleName() + " не помечен аннотацией @ToString");
+            
         
     }
 }
